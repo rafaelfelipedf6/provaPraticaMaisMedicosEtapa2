@@ -21,6 +21,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JDesktopPane;
 import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
+import java.awt.GridLayout;
 
 public class Interface extends JFrame {
 	//Criando atributos da Interface Gráfica
@@ -62,6 +64,9 @@ public class Interface extends JFrame {
     private JRadioButton checkMedico;
     private JRadioButton checkPaciente;
     private JTextField txtTexto;
+    private JPanel panel_1;
+    private JPanel panel_2;
+    private JPanel panel_3;
 	
 	public static void main(String[] args) {
 		
@@ -87,16 +92,26 @@ public class Interface extends JFrame {
 		 setBounds(112, 90, 1142, 600);
 		 contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		 setContentPane(contentPane);
-		 contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		 
+		 contentPane.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		
 		 JPanel panel = new JPanel();
 		 contentPane.add(panel);
+		 
+		 panel_1 = new JPanel();
+		 contentPane.add(panel_1);
+		 
+		 panel_2 = new JPanel();
+		 contentPane.add(panel_2);
+		 
+		 panel_3 = new JPanel();
+		 contentPane.add(panel_3);
+		 
 		 
  /******************************************************************************/
  /*****************************Criando OBJETOS************************************/
  /******************************************************************************/
 		    btnBuscar = new JButton();
-	        btnCadastrar = new JButton();
+		    btnCadastrar = new JButton();
 	        btnRemover = new JButton();
 	        btnConsultas = new JButton();
 	        
@@ -152,7 +167,7 @@ public class Interface extends JFrame {
 		campoIdade.setColumns(2);
 		campoPlanoSaude.setColumns(10);
 		campoRg.setColumns(8);
-		campoSintomas.setColumns(100);
+		campoSintomas.setColumns(30);
 		 
 		jLabel1.setText("Nome:");
     	
@@ -160,21 +175,21 @@ public class Interface extends JFrame {
         
         jLabel3.setText("Telefone:"); 
         
-        jLabel4.setText("");
+        jLabel4.setText("Cadastrando Médico *******************\n");
         
-        jLabel5.setText("");
+        jLabel5.setText("Cadastrando Paciente *****************\n");
 
-        jLabel6.setText("");
+        jLabel6.setText("Plano de Saúde");
 
-        jLabel7.setText("");
+        jLabel7.setText("RG");
 
-        jLabel8.setText("");
+        jLabel8.setText("Idade");
 
-        jLabel9.setText("");
+        jLabel9.setText("Sintomas");
 
-        jLabel10.setText("");
+        jLabel10.setText("Registro");
 
-        jLabel11.setText("");
+        jLabel11.setText("Especialidade");
 
         jLabel12.setText("");
 
@@ -189,9 +204,9 @@ public class Interface extends JFrame {
         btnBuscar.setText("BUSCAR");
         btnRemover.setText("REMOVER");
         btnConsultas.setText("IR PARA CONSULTAS");
-/****************************************************************************************/
-/*********************************ORGANIZANDO PAINEL SUPERIOR****************************/
-/****************************************************************************************/       
+        FlowLayout fl_panel = new FlowLayout(FlowLayout.CENTER, 5, 5);
+        fl_panel.setAlignOnBaseline(true);
+        panel.setLayout(fl_panel);
 
         panel.add(jLabel1);
         panel.add(campoNome);
@@ -204,26 +219,103 @@ public class Interface extends JFrame {
 		
 		panel.add(btnCadastrar);
 		
+		panel_2.add(jLabel4);
+		panel_1.add(jLabel5);
+		panel_1.add(jLabel6);
+		panel_1.add(campoPlanoSaude);
+		panel_1.add(jLabel7);
+		panel_1.add(campoRg);
+		panel_1.add(jLabel8);
+		panel_1.add(campoIdade);
+		panel_1.add(jLabel9);
+		panel_1.add(campoSintomas);
+		panel_2.add(jLabel10);
+		panel_2.add(campoRegistro);
+		panel_2.add(jLabel11);
+		panel_2.add(campoEspecialidade);
+		
+		panel_3.add(btnBuscar);
+		panel_3.add(btnRemover);
+		panel_3.add(btnConsultas);
+		
 /****************************************************************************************/
 /*********************************ORGANIZANDO EVENTOS PARA BOTOES E CHECKBOX*************/
 /****************************************************************************************/       
 
 		checkMedico.addActionListener(new ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
+            @SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent evt) {
+            	campoRegistro.enable();
+                campoEspecialidade.enable();
+                campoRg.disable();
+                campoIdade.disable();
+                campoSintomas.disable();
+                campoPlanoSaude.disable();
+                checkPaciente.setSelected(false);
+                jLabel5.disable();
+                jLabel4.enable();
+                jLabel6.disable();
+                jLabel7.disable();
+                jLabel8.disable();
+                jLabel9.disable();
+                jLabel10.enable();
+                jLabel11.enable();
             }
         });
 		checkPaciente.addActionListener(new ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
+            	campoRegistro.disable();
+                campoEspecialidade.disable();
+                campoRg.enable();
+                campoIdade.enable();
+                campoSintomas.enable();
+                checkMedico.setSelected(false);
+                jLabel4.disable();
+                jLabel5.enable();
+                jLabel6.enable();
+                jLabel7.enable();
+                jLabel8.enable();
+                jLabel9.enable();
+                jLabel10.disable();
+                jLabel11.disable();
             }
         });
+		btnRemover.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		String nome = campoNome.getText();
+	    		Usuario umUsuario = new Usuario(nome);
+	    		ControleUsuario.remover(umUsuario);
+	    	}
+	    });
+		btnBuscar.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		String umNome = campoNome.getText();
+	    		
+	    		ControleUsuario.buscar(umNome);
+	    		JTextArea encontrado = new JTextArea();
+	    		panel_3.add(encontrado);
+	    		encontrado.setText(umNome);
+	    	}
+	    });
 		btnCadastrar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		String nome = campoNome.getText();
                 String email = campoEmail.getText();
                 String telefone = campoTelefone.getText();
-                
-                            
+                System.out.println("Cadastrando usuario");
+                if(checkMedico.isSelected() == false){
+                	 jLabel10.setVisible(false);
+                	 jLabel11.setVisible(false);
+                	 jLabel4.setVisible(false);
+                }else if(checkPaciente.isSelected() == false){
+                	jLabel5.setVisible(false);
+	               	 jLabel6.setVisible(false);
+	               	 jLabel7.setVisible(false);
+	               	jLabel8.setVisible(false);
+	               	 jLabel9.setVisible(false);
+                	
+                	
+                }
                 if(checkMedico.isSelected() == true){
               
                     String registro = campoRegistro.getText();
@@ -236,52 +328,50 @@ public class Interface extends JFrame {
                     umMedico.setEspecialidade(especialidade);
                     umMedico.setEmail(email);
                     
-                    umControle.adicionarMedico(umMedico);
+                    ControleUsuario.adicionarMedico(umMedico);
                     
-                    
-                    JOptionPane.showMessageDialog(this, "Usuário Cadastrado");
+                    JOptionPane.showMessageDialog(null, "Usuário Cadastrado com Sucesso");
                     
                     // Limpando os campos.
                     campoNome.setText("");
                     campoEmail.setText("");
-                    campoId.setText("");
-                    campoEstado.setText("");
-                    campoCrm.setText("");
-                    campoEspecificacao.setText("");
-                    campoDescricao.setText("");
-                    campoRemedios.setText("");
+                    campoTelefone.setText("");
+                    campoRegistro.setText("");
+                    campoEspecialidade.setText("");
                     checkPaciente.setSelected(false);
                     checkMedico.setSelected(false);
                     
                 }
                 else if(checkPaciente.isSelected() == true){
-                    String id = campoId.getText();
-                    String estado = campoEstado.getText();
+                	
+                    String planoSaude = campoPlanoSaude.getText();
+                    String rg = campoRg.getText();
+                    String idade = campoIdade.getText();
+                    String sintomas = campoSintomas.getText();
                     
-                    // Instanciando umPaciente.
-                    Paciente umPaciente = new Paciente(nome, id);
-                    umPaciente.setEstado(estado);
+                    
+                    Paciente umPaciente = new Paciente(nome, rg);
+                    umPaciente.setRg(rg);
                     umPaciente.setEmail(email);
-                    umPaciente.setConsulta(umaConsulta);
+                    umPaciente.setSintomas(sintomas);
                     
-                    umControle.adicionarPaciente(umPaciente);
-                    labelQtdUsuarios.setText(umControle.contarUsuarios()+" ");
-                    JOptionPane.showMessageDialog(this, "Usuário Cadastrado");
+                    ControleUsuario.adicionarPaciente(umPaciente);
+                    
+                    JOptionPane.showMessageDialog(null, "Usuário Cadastrado com Sucesso");
                     
                     // Limpando os campos.
                     campoNome.setText("");
                     campoEmail.setText("");
-                    campoId.setText("");
-                    campoEstado.setText("");
-                    campoCrm.setText("");
-                    campoEspecificacao.setText("");
-                    campoDescricao.setText("");
-                    campoRemedios.setText("");
+                    campoRg.setText("");
+                    campoIdade.setText("");
+                    campoRegistro.setText("");
+                    campoEspecialidade.setText("");
+                    campoPlanoSaude.setText("");
+                    campoSintomas.setText("");
                     checkPaciente.setSelected(false);
                     checkMedico.setSelected(false);
                 }
             }
-        	}
         });
 		
  
