@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -161,27 +162,27 @@ public class Interface extends JFrame {
         
         jLabel3.setText("Telefone:"); 
         
-        jLabel4.setText("Selecione o tipo de Usuário:");
+        jLabel4.setText("");
         
-        jLabel5.setText("ID:");
+        jLabel5.setText("");
 
-        jLabel6.setText("Estado*:");
+        jLabel6.setText("");
 
-        jLabel7.setText("*(Alto Risco, Médio Risco ou Leve)");
+        jLabel7.setText("");
 
-        jLabel8.setText("Paciente:");
+        jLabel8.setText("");
 
-        jLabel9.setText("Médico:");
+        jLabel9.setText("");
 
-        jLabel10.setText("CRM:");
+        jLabel10.setText("");
 
-        jLabel11.setText("Especificação:");
+        jLabel11.setText("");
 
-        jLabel12.setText("Consulta Médica:");
+        jLabel12.setText("");
 
-        jLabel13.setText("Descrição:");
+        jLabel13.setText("");
 
-        jLabel14.setText("Remédios/Medicações:");
+        jLabel14.setText("");
 
         radioMedico.setText("Médico");
         radioPaciente.setText("Paciente");
@@ -190,16 +191,25 @@ public class Interface extends JFrame {
         btnBuscar.setText("BUSCAR");
         btnRemover.setText("REMOVER");
         btnConsultas.setText("IR PARA CONSULTAS");
-        
         panel.add(jLabel1);
         panel.add(campoNome);
 		panel.add(jLabel2);
 		panel.add(campoEmail);
 		panel.add(jLabel3);
 		panel.add(campoTelefone);
+		panel.add(radioMedico);
+		panel.add(radioPaciente);
 		
 		
-		 
+		radioMedico.addActionListener(new ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                
+            }
+        });
+		radioPaciente.addActionListener(new ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            }
+        });
  
    }
 
